@@ -6,9 +6,9 @@ const config : ExpoConfig = {
   version: "0.1.0",
   userInterfaceStyle: "automatic",
   orientation: "portrait",
-  icon: "./assets/expo/icon.png",
+  icon: "./assets/expo/images/icon.png",
   splash: {
-    image: "./assets/expo/splash.png",
+    image: "./assets/expo/images/splash.png",
     resizeMode: "contain",
     backgroundColor: "#ffffff"
   },
@@ -23,12 +23,12 @@ const config : ExpoConfig = {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/expo/adaptive-icon.png",
+      foregroundImage: "./assets/expo/images/adaptive-icon.png",
       backgroundColor: "#FFFFFF"
     }
   },
   web: {
-    favicon: "./assets/expo/favicon.png"
+    favicon: "./assets/expo/images/favicon.png"
   }
 }
 
