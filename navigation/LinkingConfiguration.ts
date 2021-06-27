@@ -9,10 +9,20 @@ const linkingOptions : LinkingOptions =
         screens: {
           Root: {
             screens: {
-              BottomTabs: {
+              App: {
                 screens: {
-                  Chats: 'Chats',
-                  Settings: 'Settings'
+                  MenuNavigation: {
+                    screens: {
+                      ChatsMenu: 'ChatsMenu',
+                      Settings: 'Settings'
+                    }
+                  },
+                  ChatScreen: "ChatScreen"
+                }
+              },
+              Auth: {
+                screens: {
+                  Login: 'Login'
                 }
               }
             }

@@ -48,10 +48,10 @@ export function TextInput(props: ThemeProps & DefaultTextInput['props']) {
 
   if (bordered) {
     const borderColor = useThemeColor({light: lightColor, dark: darkColor}, 'border');
-    return <DefaultTextInput style={[{ color }, {borderColor}, style]} {...otherProps} />;
+    return <DefaultTextInput placeholderTextColor={color} style={[{ color }, {borderColor}, style]} {...otherProps} />;
   }
 
-  return <DefaultTextInput style={[{ color }, style]} {...otherProps} />;
+  return <DefaultTextInput placeholderTextColor={color} style={[{ color }, style]} {...otherProps} />;
 }
 
 export function View(props: ThemeProps & DefaultView['props']) {

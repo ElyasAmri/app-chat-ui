@@ -3,7 +3,36 @@ export type RootStackParamList = {
   NotFound: undefined;
 }
 
-export type BottomTabsParamList = {
-  Chats: undefined;
+export type AppStackParamList = {
+  ChatScreen: {chatID: string};
+  MenuNavigation: undefined
+}
+
+export type MenuNavigationParamList = {
+  ChatsMenu: undefined;
   Settings: undefined;
+}
+
+export type AuthStackParamList = {
+  Login: undefined;
+}
+
+export type User = {
+  id: string,
+  name: string
+}
+
+export type Chat = {
+  id: string;
+  image: string;
+  name: string;
+  members: User[];
+  messages: Message[];
+}
+
+export type Message = {
+  id: string;
+  sender: any;
+  content: string;
+  timestamp: Date;
 }
