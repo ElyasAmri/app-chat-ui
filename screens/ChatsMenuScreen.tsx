@@ -1,14 +1,12 @@
 import React from 'react';
 import {View} from "../components/Themed";
-import useUser from "../hooks/useUser";
 import ChatMenuItem from "../components/ChatMenuItem";
 import {FlatList, ListRenderItemInfo, StyleSheet} from "react-native";
 import useChats from "../hooks/useChats";
 import {Chat} from "../types";
 
 export default function ChatsMenuScreen() {
-  const user = useUser('user1');
-  const chats = useChats(user);
+  const chats = useChats();
 
   const renderItem = ({item: chat} : ListRenderItemInfo<Chat>) =>
       <ChatMenuItem chat={chat}/>

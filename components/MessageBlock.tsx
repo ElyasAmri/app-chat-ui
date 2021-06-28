@@ -10,7 +10,7 @@ export default function MessageBlock({content, self, sender, timestamp}: Message
     <View bordered style={[styles.container, self && styles.selfContainer]}>
       <Text style={styles.sender}>{sender.name}</Text>
       <Text style={styles.content}>{content}</Text>
-      <Text style={styles.timestamp}>{timestamp.toLocaleTimeString()}</Text>
+      <Text style={styles.timestamp}>{timestamp}</Text>
       <View style={self ? styles.indicatorRight : styles.indicatorLeft}/>
     </View>
   );

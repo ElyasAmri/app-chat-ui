@@ -5,6 +5,8 @@ import useColorScheme from "./hooks/useColorScheme";
 import useCachedResources from "./hooks/useCachedResources";
 import Navigation from './navigation'
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+// import {Provider} from "react-redux";
+// import {store} from "./utilities/Store";
 
 // noinspection JSUnusedGlobalSymbols
 export default function App() {
@@ -16,7 +18,9 @@ export default function App() {
   return (
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
-          <Navigation colorScheme={colorScheme}/>
+          {/*<Provider store={store}>*/}
+            <Navigation colorScheme={colorScheme}/>
+          {/*</Provider>*/}
         </SafeAreaView>
         <StatusBar backgroundColor={"red"}/>
       </SafeAreaProvider>

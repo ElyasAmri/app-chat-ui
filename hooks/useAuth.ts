@@ -1,13 +1,18 @@
 import {useEffect, useState} from 'react';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {auth} from "../utilities/Firebase";
+import firebase from "firebase";
 
 export default function useAuth() {
+  const [user, setUser] = useState<firebase.User | null>();
   const [logged, setLogged] = useState(false);
   useEffect(() => {
-    (async () => {
-      const result = await AsyncStorage.getItem('@logged');
-      setLogged(result === 'true');
-    })();
+    let abort = false;
+    auth.onAuthStateChanged((user) => {
+      if(abort) return;
+      setUser(user);
+      setLogged(!!user);
+    });
+    return () => {abort = true};
   });
-  return logged;
+  return [logged, user];
 }

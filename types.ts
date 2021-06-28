@@ -5,7 +5,7 @@ export type RootStackParamList = {
 
 export type AppStackParamList = {
   ChatScreen: {chatID: string};
-  MenuNavigation: undefined
+  MenuNavigation: undefined;
 }
 
 export type MenuNavigationParamList = {
@@ -18,8 +18,9 @@ export type AuthStackParamList = {
 }
 
 export type User = {
-  id: string,
-  name: string
+  id: string;
+  name: string;
+  chats: string[];
 }
 
 export type Chat = {
@@ -34,5 +35,5 @@ export type Message = {
   id: string;
   sender: any;
   content: string;
-  timestamp: Date;
+  timestamp: number | Date;
 }

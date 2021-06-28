@@ -1,30 +1,26 @@
-import React, {useEffect, useRef} from 'react';
-import useUser from "../hooks/useUser";
-import {AppStackParamList} from "../types";
+import React from 'react';
+import {AppStackParamList, Message} from "../types";
 import useChat from "../hooks/useChat";
-import {FlatList, StyleSheet} from "react-native";
+import {FlatList, ListRenderItemInfo, StyleSheet} from "react-native";
 import MessageBlock from "../components/MessageBlock";
 import {View} from "../components/Themed";
 import {StackScreenProps} from "@react-navigation/stack";
+import {auth} from "../utilities/Firebase";
 
 export default function ChatScreen({route}: StackScreenProps<AppStackParamList, "ChatScreen">) {
-  const user = useUser('user1');
-  const messages = useRef();
+  const userID = auth.currentUser?.uid;
   const chat = useChat(route.params.chatID)
 
-
-  useEffect(() => {
-    setTimeout(() => (messages.current as any).scrollToEnd(), 20)
-  }, [])
-
-  const renderMessageBlock = ({item}: any) => {
-    return <MessageBlock {...item} self={item.sender.id === user.id}/>
+  const renderMessageBlock = ({item}: ListRenderItemInfo<Message>) => {
+    return <MessageBlock {...item} self={item.sender.id === userID}/>
   }
+
+  if(!chat) return <></>;
 
   return (
     <View style={styles.container}>
-      <FlatList data={chat.messages}
-                ref={messages as any}
+      <FlatList inverted
+                data={chat.messages}
                 renderItem={renderMessageBlock}
                 keyExtractor={(item: any) => item.id.toString()}
                 style={styles.messages}/>

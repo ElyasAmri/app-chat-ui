@@ -1,6 +1,7 @@
 import { ExpoConfig } from '@expo/config';
 
-const config : ExpoConfig = {
+// noinspection JSUnusedGlobalSymbols
+export default {
   name: "new-chat-app",
   slug: "new-chat-app",
   version: "0.1.0",
@@ -30,6 +31,4 @@ const config : ExpoConfig = {
   web: {
     favicon: "./assets/expo/images/favicon.png"
   }
-}
-
-export default config;
+} as ExpoConfig

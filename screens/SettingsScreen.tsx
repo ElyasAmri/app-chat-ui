@@ -1,12 +1,12 @@
 import React from 'react';
-import {Text, View} from "../components/Themed";
+import {View} from "../components/Themed";
+import {Button} from "react-native";
+import {auth} from "../utilities/Firebase";
 
 export default function SettingsScreen() {
   return (
     <View>
-      <Text>
-        Settings
-      </Text>
+      <Button title="Logout" onPress={() => auth.signOut()}/>
     </View>
   );
 }
