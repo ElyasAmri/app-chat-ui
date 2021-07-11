@@ -1,35 +1,36 @@
 import * as Linking from 'expo-linking';
 import {LinkingOptions} from "@react-navigation/native";
 
-const linkingOptions : LinkingOptions =
-    {
-      prefixes: [Linking.makeUrl('/')],
-      config: {
-        initialRouteName: "Root",
+export default {
+  prefixes: [Linking.makeUrl('/')],
+  config: {
+    initialRouteName: "Root",
+    screens: {
+      Root: {
         screens: {
-          Root: {
+          App: {
+            initialRouteName: "MenuNavigation",
             screens: {
-              App: {
+              MenuNavigation: {
+                initialRouteName: "ChatMenuScreen",
                 screens: {
-                  MenuNavigation: {
-                    screens: {
-                      ChatsMenu: 'ChatsMenu',
-                      Settings: 'Settings'
-                    }
-                  },
-                  ChatScreen: "ChatScreen"
-                }
+                  ChatMenuScreen: "ChatMenuScreen",
+                  SettingsScreen: 'SettingsScreen',
+                },
               },
-              Auth: {
-                screens: {
-                  Login: 'Login'
-                }
-              }
+              ChatScreen: 'ChatScreen',
+            },
+          },
+          Auth: {
+            initialRouteName: "Login", // TODO: sign up,
+            screens: {
+              Login: "Login",
+              // sign up, forgot password, etc...
             }
           },
-          NotFound: '*',
-        },
+        }
       },
-    }
-
-export default {...linkingOptions}
+      NotFound: '*',
+    },
+  },
+} as LinkingOptions;

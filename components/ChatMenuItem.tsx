@@ -1,22 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from "./Themed";
 import {Image, StyleSheet} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import {Chat} from "../types";
+import {ChatInfo, Message, UserInfo, RootState} from "../types";
+import {db, storage} from "../utilities/Firebase";
+import {useSelector} from "react-redux";
 
-export default function ChatMenuItem({chat}: {chat: Chat}) {
+export default function ChatMenuItem({chat}: {chat: ChatInfo}) {
   const navigation = useNavigation();
+  const user = useSelector<RootState>(state => state.user) as UserInfo;
+
+  const [image, setImage] = useState("");
+  const [last, setLast] = useState<Message>();
+  const lastMessage = last &&
+      ((last.sender.id === user.id ? "You" : last.sender.name) + ' said: ' + last.content)
+
+  useEffect(() => {
+    if(chat.image){
+      storage.refFromURL(chat.image).getDownloadURL().then(setImage);}
+    db.ref(`chats/${chat.id}/messages`).limitToLast(1)
+        .on('value', snapshot => {
+          setLast(Object.values(snapshot.val())[0] as Message);
+        });
+  }, []);
 
   return (
     <TouchableOpacity onPress={() => {navigation.navigate("ChatScreen", {chatID: chat.id})}}
                       bordered={true} style={styles.container}>
-      {chat.image ?
-          <Image style={styles.image} source={{uri: chat.image}}/> :
-          <View style={styles.image}/>
-      }
+      <Image resizeMethod="scale" style={styles.image} source={
+        image ? {uri: image} :
+        require('../assets/images/qm.png')
+      }/>
       <View style={styles.details}>
         <Text style={styles.name}>{chat.name}</Text>
-        {/*<Text style={styles.status}>{chat.lastMessage}</Text>*/}
+        <Text style={styles.status}>{lastMessage}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -34,8 +51,9 @@ const styles = StyleSheet.create({
   },
   image: {
     height: "100%",
+    maxWidth: 90,
     aspectRatio: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#4e4e4e',
     borderRadius: 50,
   },
   details: {
@@ -48,6 +66,7 @@ const styles = StyleSheet.create({
   },
 
   status: {
-    fontSize: 12
+    fontSize: 12,
+    marginLeft: 4,
   }
 })

@@ -1,12 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {StyleSheet} from 'react-native';
+import {LogBox, StyleSheet} from 'react-native';
 import useColorScheme from "./hooks/useColorScheme";
 import useCachedResources from "./hooks/useCachedResources";
 import Navigation from './navigation'
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
-// import {Provider} from "react-redux";
-// import {store} from "./utilities/Store";
+import {Provider} from "react-redux";
+import {store} from "./utilities/Store";
+LogBox.ignoreLogs(['Setting a timer']);
 
 // noinspection JSUnusedGlobalSymbols
 export default function App() {
@@ -18,9 +19,9 @@ export default function App() {
   return (
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
-          {/*<Provider store={store}>*/}
+          <Provider store={store}>
             <Navigation colorScheme={colorScheme}/>
-          {/*</Provider>*/}
+          </Provider>
         </SafeAreaView>
         <StatusBar backgroundColor={"red"}/>
       </SafeAreaProvider>

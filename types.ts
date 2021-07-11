@@ -1,3 +1,5 @@
+import {store} from "./utilities/Store";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -17,23 +19,35 @@ export type AuthStackParamList = {
   Login: undefined;
 }
 
-export type User = {
+export type UserInfo = {
   id: string;
   name: string;
+  auth: boolean;
+}
+
+export type User = {
+  info: UserInfo;
   chats: string[];
 }
 
-export type Chat = {
+export type ChatInfo = {
   id: string;
   image: string;
   name: string;
+}
+
+export type Chat = {
+  info: ChatInfo;
   members: User[];
   messages: Message[];
 }
 
 export type Message = {
   id: string;
-  sender: any;
+  sender: UserInfo;
   content: string;
   timestamp: number | Date;
 }
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

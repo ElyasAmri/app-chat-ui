@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import {setUser, store} from "./Store";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtROPD6kECFb2at_9cBfB18JPyd6X2oXw",
@@ -12,8 +13,31 @@ const firebaseConfig = {
 }
 
 if(!firebase.apps.length)
-  firebase.initializeApp(firebaseConfig);
+{
+  const onError = (error:any) => {
+    console.log(error);
+  }
 
-export const db = firebase.database();
-export const auth = firebase.auth();
-export default firebase
+  const onUserChanged = (user : firebase.User | null) => {
+    if(!user) {
+      store.dispatch(setUser({id: "", name: "", auth: false}))
+      console.log("Auth state changed to "+ store.getState().user.auth);
+      return;
+    }
+    const userRef = db.ref('users/' + user.uid);
+    userRef.get().then(snapshot => {
+      store.dispatch(setUser({id: snapshot.key, ...snapshot.val(), auth: true}));
+      console.log("User : ", store.getState().user, "Auth is now true");
+    });
+  }
+
+  firebase.initializeApp(firebaseConfig);
+  firebase.auth().onAuthStateChanged(onUserChanged, onError);
+}
+
+const db = firebase.database();
+const auth = firebase.auth();
+const storage = firebase.storage();
+
+export {db, auth, storage};
+export default firebase;

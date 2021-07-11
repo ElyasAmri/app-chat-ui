@@ -2,9 +2,9 @@ import { ExpoConfig } from '@expo/config';
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-  name: "new-chat-app",
-  slug: "new-chat-app",
-  version: "0.1.0",
+  name: "App Chat UI",
+  slug: "app-chat-ui",
+  version: "0.3.0",
   userInterfaceStyle: "automatic",
   orientation: "portrait",
   icon: "./assets/expo/images/icon.png",
@@ -20,7 +20,7 @@ export default {
     "**/*"
   ],
   ios: {
-    supportsTablet: true
+    supportsTablet: true,
   },
   android: {
     adaptiveIcon: {

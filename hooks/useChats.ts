@@ -1,22 +1,24 @@
-import {Chat} from "../types";
+import {ChatInfo, UserInfo, RootState} from "../types";
 import {useEffect, useState} from "react";
 import {db} from "../utilities/Firebase";
-//import useUser from "./useUser";
+import {useSelector} from "react-redux";
 
-export default function useChats() : Chat[] {
-    const [chats, setChats] = useState<Chat[]>([]);
-    //const user = useUser();
+type FirebaseChatInfo = Omit<ChatInfo, "id">;
+
+export default function useChats() : ChatInfo[] {
+    const [chats, setChats] = useState<ChatInfo[]>([]);
+    const user = useSelector<RootState>(state => state.user) as UserInfo;
 
     useEffect(() => {
-        db.ref('chats').get()
-            .then(snapshot => {
-                const val = snapshot.val();
-                const chats = Object.entries<Chat>(val)
-                    .map(([key, value]) => ({...value, id: key}))
-                setChats(chats)
-            })
-            .catch(err => console.log(Object.keys(err)))
-    }, [])
+      const userChats = db.ref(`users/${user.id}/chats`);
+      userChats.get().then(snapshot => {
+        const val = snapshot.val();
+        const chats = val ? Object.entries<FirebaseChatInfo>(val)
+            .map(([id, obj]) => ({id, ...obj})) : [];
+        console.log("Chats : ", chats);
+        setChats(chats);
+      });
+    }, [user.id])
 
     return chats;
 }

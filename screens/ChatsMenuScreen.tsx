@@ -3,12 +3,12 @@ import {View} from "../components/Themed";
 import ChatMenuItem from "../components/ChatMenuItem";
 import {FlatList, ListRenderItemInfo, StyleSheet} from "react-native";
 import useChats from "../hooks/useChats";
-import {Chat} from "../types";
+import {ChatInfo} from "../types";
 
 export default function ChatsMenuScreen() {
   const chats = useChats();
 
-  const renderItem = ({item: chat} : ListRenderItemInfo<Chat>) =>
+  const renderItem = ({item: chat} : ListRenderItemInfo<ChatInfo>) =>
       <ChatMenuItem chat={chat}/>
 
   return (
