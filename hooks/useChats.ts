@@ -11,7 +11,7 @@ export default function useChats() : ChatInfo[] {
 
     useEffect(() => {
       const userChats = db.ref(`users/${user.id}/chats`);
-      userChats.get().then(snapshot => {
+      userChats.on("value", snapshot => {
         const val = snapshot.val();
         const chats = val ? Object.entries<FirebaseChatInfo>(val)
             .map(([id, obj]) => ({id, ...obj})) : [];

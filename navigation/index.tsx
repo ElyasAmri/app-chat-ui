@@ -7,14 +7,16 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import AppNavigation from "./AppNavigation";
 import AuthNavigation from "./AuthNavigation";
 import {useSelector} from "react-redux";
+import LinkingConfiguration from "./LinkingConfiguration";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function Navigation({colorScheme}: {colorScheme: ColorSchemeName})
 {
   const auth = useSelector<RootState>(state => state.user.auth);
+  const theme = colorScheme === "dark" ? DarkTheme : DefaultTheme;
   return (
-      <NavigationContainer theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <NavigationContainer linking={LinkingConfiguration} theme={theme}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Root" component={auth ? AppNavigation : AuthNavigation}/>
           <Stack.Screen name="NotFound" component={NotFoundScreen}/>

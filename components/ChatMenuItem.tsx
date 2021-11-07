@@ -12,20 +12,22 @@ export default function ChatMenuItem({chat}: {chat: ChatInfo}) {
 
   const [image, setImage] = useState("");
   const [last, setLast] = useState<Message>();
-  const lastMessage = last &&
+  const lastMessage = last ?
       ((last.sender.id === user.id ? "You" : last.sender.name) + ' said: ' + last.content)
+      : 'No message'
 
   useEffect(() => {
     if(chat.image){
       storage.refFromURL(chat.image).getDownloadURL().then(setImage);}
     db.ref(`chats/${chat.id}/messages`).limitToLast(1)
         .on('value', snapshot => {
-          setLast(Object.values(snapshot.val())[0] as Message);
+          const val = snapshot.val();
+          setLast(val ? Object.values(val)[0] as Message : undefined);
         });
   }, []);
 
   return (
-    <TouchableOpacity onPress={() => {navigation.navigate("ChatScreen", {chatID: chat.id})}}
+    <TouchableOpacity onPress={() => {navigation.navigate("ChatScreen", {id: chat.id, name: chat.name})}}
                       bordered={true} style={styles.container}>
       <Image resizeMethod="scale" style={styles.image} source={
         image ? {uri: image} :

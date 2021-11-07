@@ -1,31 +1,33 @@
 import React, {useRef, useState} from 'react';
-import {TextInput, View} from "../components/Themed";
-import {Button, StyleSheet} from "react-native";
+import {Text, TextInput, View} from "../components/Themed";
+import {ActivityIndicator, Button, StyleSheet} from "react-native";
 import {auth} from "../utilities/Firebase";
+import {useNavigation} from "@react-navigation/native";
 
 export default function LoginScreen() {
   const email = useRef("");
   const password = useRef("");
-  const [submitting, setSubmitting] = useState(false);
+  const nav = useNavigation();
+  const [overlay, setOverlay] = useState(false);
   const setEmail = (text: string) => email.current = text;
   const setPassword = (text: string) => password.current = text;
 
   const tempSubmit = (email: string, password: string) => {
     console.log("Temp signing")
-    setSubmitting(true);
+    setOverlay(false);
     auth.signInWithEmailAndPassword(email, password)
         .catch(err => {
-          setSubmitting(false);
+          setOverlay(true);
           console.log("Failed to login", err)
         });
   }
 
   const submit = () => {
-    setSubmitting(true);
+    setOverlay(true);
     auth.signInWithEmailAndPassword(email.current, password.current)
         .then(_ => console.log("Signed in"))
         .catch(err => {
-          setSubmitting(false);
+          setOverlay(false);
           console.log("Failed to login", err)
         });
   }
@@ -37,7 +39,12 @@ export default function LoginScreen() {
       <Button title="Login" onPress={submit}/>
       <Button title="DS1" onPress={() => tempSubmit("user1@acui.me", "password")}/>
       <Button title="DS2" onPress={() => tempSubmit("user2@acui.me", "password")}/>
-      <View style={[styles.overlay, !submitting && {display: "none"}]}/>
+      <Button title="Signup" onPress={() => nav.navigate("Signup")}/>
+      <Text>{overlay ? 'true' : 'false'}</Text>
+      {overlay &&
+      <View style={styles.overlay}>
+        <ActivityIndicator size="small" color="blue"/>
+      </View>}
     </View>
   );
 }
@@ -61,5 +68,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })

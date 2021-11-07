@@ -5,33 +5,24 @@ import {Message} from "../types";
 
 export default function MessageBlock({content, self, sender, timestamp}: Message & { self: boolean }) {
   return (
-    <View bordered style={[styles.container, self && styles.selfContainer, self ? styles.curveRight : styles.curveLeft]}>
-      {/*<View style={[styles.indicator, self ? styles.indicatorRight : styles.indicatorLeft]}/>*/}
-      <Text style={[styles.sender, self ? styles.curveRight : styles.curveLeft]}>{sender.name}</Text>
+    <View bordered style={[styles.container, self && styles.selfContainer, self ? styles.containerCurveRight : styles.containerCurveLeft]}>
+      <View style={[styles.senderHolder ,self ? styles.senderCurveRight : styles.senderCurveLeft]}>
+        <Text style={styles.sender}>{sender.name}</Text>
+      </View>
       <Text style={styles.content}>{content}</Text>
-      <Text style={styles.timestamp}>{timestamp}</Text>
+      <Text style={[styles.timestamp, self ? styles.textLeft : styles.textRight]}>{timestamp}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 0.5,
     marginVertical: 4,
     marginHorizontal: 5,
     alignSelf: "baseline",
     maxWidth: "80%",
-    position: 'relative'
-  },
-
-  curveRight: {
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-
-  curveLeft: {
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
+    position: 'relative',
+    backgroundColor: '#e0e0e0'
   },
 
   selfContainer: {
@@ -39,29 +30,55 @@ const styles = StyleSheet.create({
     backgroundColor: '#188459'
   },
 
-  indicatorLeft: {
-    left: -6,
-  },
-  indicatorRight: {
-    right: -6,
+  containerCurveRight: {
+    borderTopLeftRadius: 25,
+    borderBottomRightRadius: 25,
   },
 
-  indicator: {
-    position: 'absolute',
-    bottom: 0,
-    width: 10,
-    height: 10,
-    backgroundColor: 'yellow',
+  containerCurveLeft: {
+    borderTopRightRadius: 25,
+    borderBottomLeftRadius: 25,
+  },
+
+  senderCurveRight: {
+    borderTopLeftRadius: 50,
+    borderBottomRightRadius: 1,
+  },
+
+  senderCurveLeft: {
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 1,
   },
 
   sender: {
     fontSize: 12,
-    backgroundColor: 'red',
-    borderTopRightRadius: 5,
-    borderTopLeftRadius: 5,
-    paddingHorizontal: 4,
-    overflow: "hidden"
+    overflow: "hidden",
   },
-  content: {paddingHorizontal: 4,},
-  timestamp: {fontSize: 10, fontStyle: 'italic', paddingHorizontal: 4},
+
+  senderHolder: {
+    backgroundColor: '#ffc636',
+    height: 20,
+    paddingHorizontal: 8,
+    paddingTop: 2,
+  },
+
+  content: {
+    paddingHorizontal: 4,
+    paddingVertical: 4,
+  },
+  timestamp: {
+    fontSize: 10,
+    fontStyle: 'italic',
+    minWidth: 100,
+    paddingHorizontal: 4,
+    paddingBottom: 2,
+  },
+
+  textLeft: {
+    textAlign: "left",
+  },
+
+  textRight: {
+    textAlign: 'right',
+  }
 })

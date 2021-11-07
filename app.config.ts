@@ -5,6 +5,7 @@ export default {
   name: "App Chat UI",
   slug: "app-chat-ui",
   version: "0.3.0",
+  scheme: "acui",
   userInterfaceStyle: "automatic",
   orientation: "portrait",
   icon: "./assets/expo/images/icon.png",

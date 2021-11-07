@@ -6,8 +6,10 @@ export type RootStackParamList = {
 }
 
 export type AppStackParamList = {
-  ChatScreen: {chatID: string};
+  ChatScreen: {id: string; name: string;};
   MenuNavigation: undefined;
+  AddChatScreen: undefined;
+  AddUserScreen: undefined;
 }
 
 export type MenuNavigationParamList = {
@@ -17,6 +19,7 @@ export type MenuNavigationParamList = {
 
 export type AuthStackParamList = {
   Login: undefined;
+  Signup: undefined;
 }
 
 export type UserInfo = {
